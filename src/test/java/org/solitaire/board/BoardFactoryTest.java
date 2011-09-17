@@ -3,6 +3,7 @@ package org.solitaire.board;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * User: Tobias

@@ -1,10 +1,13 @@
 package org.solitaire.solver;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.solitaire.board.Board;
 import org.solitaire.board.BoardFactory;
 import org.solitaire.solver.strategy.BasicStrategy;
+import org.solitaire.solver.strategy.Strategy;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -14,19 +17,38 @@ import static org.junit.Assert.fail;
  */
 public class SolverTest {
 
-    @Test
-    public void testSolver() {
-        Board englishBoard = null;
+    private Board englishBoard;
+
+    @Before
+    public void createBoard() {
         try {
-            englishBoard = BoardFactory.createBoard("org.solitaire.board.EnglishBoard");
+            this.englishBoard = BoardFactory.createBoard("org.solitaire.board.EnglishBoard");
         } catch( ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             fail("creating a board for which a class does exist should not throw an exception");
         }
-        Solver solver = new Solver(englishBoard);
+    }
+
+    @Test
+    public void testSolverInstantiation() {
+        Solver solver = new Solver(this.englishBoard);
         assertNotNull(solver);
+        assertEquals(this.englishBoard, solver.getBoard());
+    }
+
+    @Test
+    public void testSolverStrategy() {
+        Solver solver = new Solver(this.englishBoard);
+        Strategy basicStrategy = new BasicStrategy();
+        solver.setStrategy(basicStrategy);
+        assertEquals(basicStrategy, solver.getStrategy());
+    }
+
+    @Test
+    public void testSolutionProperties() {
+        Solver solver = new Solver(this.englishBoard);
         solver.setStrategy(new BasicStrategy());
+
         Solution solution = solver.solve(englishBoard.getStartPosition());
         assertNotNull(solution);
-
     }
 }

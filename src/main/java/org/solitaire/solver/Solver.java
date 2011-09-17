@@ -8,8 +8,11 @@ import org.solitaire.solver.strategy.Strategy;
  * Date: 17.09.2011
  */
 public class Solver {
-    public Solver(Board board) {
+    private Board board;
+    private Strategy strategy;
 
+    public Solver(Board board) {
+        this.board = board;
     }
 
     public Solution solve(Long startPosition) {
@@ -17,6 +20,14 @@ public class Solver {
     }
 
     public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
 
+    public Board getBoard() {
+        return this.board;
+    }
+
+    public Strategy getStrategy() {
+        return this.strategy;
     }
 }

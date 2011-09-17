@@ -7,9 +7,7 @@ import org.solitaire.board.BoardFactory;
 import org.solitaire.solver.strategy.BasicStrategy;
 import org.solitaire.solver.strategy.Strategy;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * User: Tobias
@@ -44,11 +42,22 @@ public class SolverTest {
     }
 
     @Test
-    public void testSolutionProperties() {
+    public void testSolutionIsNotNull() {
         Solver solver = new Solver(this.englishBoard);
         solver.setStrategy(new BasicStrategy());
 
         Solution solution = solver.solve(englishBoard.getStartPosition());
         assertNotNull(solution);
+    }
+
+    @Test
+    public void testSolutionIsCorrect() {
+        Solver solver = new Solver(this.englishBoard);
+        solver.setStrategy(new BasicStrategy());
+        Long startPosition = englishBoard.getStartPosition();
+        Solution solution = solver.solve(startPosition);
+
+        //assertEquals(BoardHelper.getNumberOfPins(startPosition), solution.getSolution().size());
+
     }
 }

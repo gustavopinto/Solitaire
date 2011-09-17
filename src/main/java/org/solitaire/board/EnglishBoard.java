@@ -104,9 +104,6 @@ public class EnglishBoard implements Board {
     public ArrayList<Long> getConsecutivePositions(long position) {
         ArrayList<Long> positions = new ArrayList<>();
         for(ArrayList<Long> mask : moveMasks) {
-            if(mask.get(0) == 0L) {
-                break;
-            }
             // apply mask to position
             long masked = position & mask.get(0);
 

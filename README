@@ -1,0 +1,7 @@
+This  project serves different purposes:
+* finding one or all solutions of the (pin or peg) solitaire game in reasonable time
+* practising software development (like a slightly bigger Code Kata)
+
+The first implementation will use Java7 and is developed with the community edition of IntelliJ IDEA version 10.5.2.
+
+

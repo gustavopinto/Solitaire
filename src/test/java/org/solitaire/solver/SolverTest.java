@@ -4,8 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.solitaire.board.Board;
 import org.solitaire.board.BoardFactory;
+import org.solitaire.board.BoardHelper;
 import org.solitaire.solver.strategy.BasicStrategy;
 import org.solitaire.solver.strategy.Strategy;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -59,11 +62,13 @@ public class SolverTest {
     public void testSolutionIsCorrect() {
         Solver solver = new Solver(this.board);
         solver.setStrategy(new BasicStrategy());
-        Long startPosition = board.getStartPosition();
+        Long startPosition = this.board.getStartPosition();
         Solution solution = solver.solve(startPosition);
-        assertEquals(32, solution.getSolutionAsList().size());
-        for(Long position : solution.getSolutionAsList()) {
-            assertNotSame(0L, position);
+        List<Long> solutionAsList = solution.getSolutionAsList();
+        assertEquals(32, solutionAsList.size());
+        assertEquals(startPosition, solutionAsList.get(0));
+        for(int i = 0; i < 31 ; i++) {
+            assertTrue(this.board.getConsecutivePositions(solutionAsList.get(i)).contains(solutionAsList.get(i+1)));
         }
         assertEquals(0b0000000_0000000_0000000_0001000_0000000_0000000_0000000L, solution.getSolution()[0]);
     }

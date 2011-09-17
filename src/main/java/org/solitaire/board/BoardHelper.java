@@ -17,9 +17,9 @@ public class BoardHelper {
             if( !testBit(board.getLayout(), i) ) {
                 positionString.append("  ");
             } else if(testBit(position, i)) {
-                positionString.append("* ");
+                positionString.append("O ");
             } else {
-                positionString.append("o ");
+                positionString.append("* ");
             }
             if((i > 0) && (((i+1) % board.getRows()) == 0)) {
                 positionString.append("\n");

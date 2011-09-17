@@ -19,8 +19,8 @@ public class BoardFactoryTest {
             unknownBoard = BoardFactory.createBoard("org.solitaire.board.unknownBoard");
             fail("creating an unknown board should throw an exception");
         } catch( ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            assertNull(unknownBoard);
         }
+        assertNull(unknownBoard);
 
         Board englishBoard;
         try {

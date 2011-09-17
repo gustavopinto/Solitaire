@@ -16,7 +16,7 @@ public class Solver {
     }
 
     public Solution solve(Long startPosition) {
-        return new Solution(this.board.getNumberOfFields());
+        return this.strategy.solve(this.board, startPosition);
     }
 
     public void setStrategy(Strategy strategy) {

@@ -18,7 +18,7 @@ public class Solution {
         }
     }
 
-    long[] getSolution() {
+    public long[] getSolution() {
         return this.solution;
     }
 

@@ -2,7 +2,7 @@ package org.solitaire.board;
 
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNull;
 
 /**
  * User: Tobias
@@ -12,6 +12,12 @@ public class BoardFactoryTest {
 
     @Test
     public void testUnknownBoard() {
-        fail("not implemented yet");
+        Board unknownBoard = null;
+        try {
+            unknownBoard = BoardFactory.createBoard("org.solitaire.board.unknownBoard");
+            fail("creating an unknown board should throw an exception");
+        } catch( ClassNotFoundException e) {
+            assertNull(unknownBoard);
+        }
     }
 }

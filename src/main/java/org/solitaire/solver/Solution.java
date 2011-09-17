@@ -22,6 +22,12 @@ public class Solution {
         return this.solution;
     }
 
+    /**
+     * This method may be used for printing the solution.
+     * The first position in the list will be the start position
+     * and the last position in the list is the end position.
+     * @return the reversed solution array as list
+     */
     public List<Long> getSolutionAsList() {
         List<Long> solutionList = new ArrayList<>();
         for(long position :  this.solution){

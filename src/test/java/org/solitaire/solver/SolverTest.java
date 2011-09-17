@@ -8,6 +8,7 @@ import org.solitaire.solver.strategy.BasicStrategy;
 import org.solitaire.solver.strategy.Strategy;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * User: Tobias
@@ -56,8 +57,10 @@ public class SolverTest {
         solver.setStrategy(new BasicStrategy());
         Long startPosition = englishBoard.getStartPosition();
         Solution solution = solver.solve(startPosition);
-
-        //assertEquals(BoardHelper.getNumberOfPins(startPosition), solution.getSolution().size());
-
+        assertEquals(32, solution.getSolutionAsList().size());
+        for(Long position : solution.getSolutionAsList()) {
+            assertNotSame(0L, position);
+        }
+        assertSame(0b00000_00000_00000_00100_00000_00000_00000L, solution.getSolution()[0]);
     }
 }

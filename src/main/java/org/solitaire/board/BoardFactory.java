@@ -6,11 +6,11 @@ package org.solitaire.board;
  */
 
 public class BoardFactory {
-    public static Board createBoard(String className) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-
-        Class concreteBoardClass = Class.forName(className);
-
-        // Reminder: this does work for classes with default constructor only
-        return (Board)concreteBoardClass.newInstance();
+    public static Board createBoard(String boardName) {
+        switch(boardName) {
+            case "english":
+                return new EnglishBoard();
+        }
+        return null;
     }
 }

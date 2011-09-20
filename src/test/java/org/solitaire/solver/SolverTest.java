@@ -23,11 +23,7 @@ public class SolverTest {
 
     @Before
     public void createBoard() {
-        try {
-            this.board = BoardFactory.createBoard("org.solitaire.board.EnglishBoard");
-        } catch( ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            fail("creating a board for which a class does exist should not throw an exception");
-        }
+        this.board = BoardFactory.createBoard("english");
     }
 
     @Test
@@ -85,7 +81,7 @@ public class SolverTest {
     @Test
     public void testLessThanMovesStrategySolutionIsCorrect() {
         Solver solver = new Solver(this.board);
-        Strategy lessThanMovesStrategy = new LessThanMovesStrategy(25);
+        Strategy lessThanMovesStrategy = new LessThanMovesStrategy(26);
         solver.setStrategy(lessThanMovesStrategy);
         Long startPosition = this.board.getStartPosition();
         Solution solution = solver.solve(startPosition);

@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * User: Tobias
@@ -16,11 +15,7 @@ public class BoardHelperTest {
 
     @Before
     public void createBoard() {
-        try {
-            this.board = BoardFactory.createBoard("org.solitaire.board.EnglishBoard");
-        } catch ( ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            fail("creation of english board should not throw an exception");
-        }
+        this.board = BoardFactory.createBoard("english");
     }
 
     @Test

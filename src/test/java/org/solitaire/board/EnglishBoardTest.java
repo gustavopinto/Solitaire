@@ -5,7 +5,6 @@ import org.solitaire.solver.Solution;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 /**
  * User: Tobias
@@ -15,12 +14,7 @@ public class EnglishBoardTest {
 
     @Test
     public void testEnglishBoardAttributes() {
-        Board englishBoard = null;
-        try {
-            englishBoard = BoardFactory.createBoard("org.solitaire.board.EnglishBoard");
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            fail("creating an instance of EnglishBoard via factory should not throw an exception");
-        }
+        Board englishBoard = BoardFactory.createBoard("english");
         assertNotNull(englishBoard);
         assertEquals((Integer) 7, englishBoard.getColumns());
         assertEquals((Integer) 7, englishBoard.getRows());
@@ -68,12 +62,7 @@ public class EnglishBoardTest {
         solution[28] = 1L << 15|1L << 16|1L << 17|1L << 20|1L << 19| 1L << 27 |1L << 33 |1L << 39|1L << 46|1L << 24 |1L << 45|1L << 44|1L << 18|1L << 11|1L << 32|1L << 10|1L << 9|1L << 2|1L << 23|1L << 3|1L << 4|1L << 30|1L << 37 |1L << 31 |1L << 22 | 1L << 29| 1L << 21| 1L << 14 | 1L << 38;
         solution[29] = 1L << 15|1L << 16|1L << 17|1L << 20|1L << 19| 1L << 27 |1L << 33 |1L << 39|1L << 46|1L << 25|1L << 26|1L << 45|1L << 44|1L << 18|1L << 11|1L << 32|1L << 10|1L << 9|1L << 2|1L << 23|1L << 3|1L << 4|1L << 30|1L << 37 |1L << 31 |1L << 22 | 1L << 29| 1L << 21| 1L << 14 | 1L << 38;
         solutionObject.setSolution(solution);
-        Board englishBoard = null;
-        try {
-            englishBoard = BoardFactory.createBoard("org.solitaire.board.EnglishBoard");
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            fail("creating an instance of EnglishBoard via factory should not throw an exception");
-        }
+        Board englishBoard = BoardFactory.createBoard("english");
         Integer numMoves = BoardHelper.countMoves(englishBoard, solutionObject);
         assertEquals((Integer)15, numMoves);
     }

@@ -36,4 +36,8 @@ public class Solution {
         Collections.reverse(solutionList);
         return solutionList;
     }
+
+    public void setSolution(long[] solution) {
+        this.solution = solution;
+    }
 }

@@ -1,5 +1,7 @@
 package org.solitaire.board;
 
+import org.solitaire.solver.Solution;
+
 /**
  * User: Tobias
  * Date: 17.09.2011
@@ -45,5 +47,21 @@ public class BoardHelper {
      */
     public static int getNumberOfPins(long position) {
         return Long.bitCount(position);
+    }
+
+    public static Integer countMoves(Board board, Solution solution) {
+        //first move is always a new move
+        int numMoves = 1;
+        for(int i = solution.getSolution().length-1; i > 1; i--) {
+            long pos1 = solution.getSolution()[i];
+            long pos2 = solution.getSolution()[i-1];
+            long pos3 = solution.getSolution()[i-2];
+
+            long mask = pos1 ^ pos3;
+            if( ( ((pos1^pos2)| (pos2^pos3) ) & (pos1 & pos3 )) != 0L  || !board.getConnectedMoveMasks().contains(mask) ) {
+                numMoves++;
+            }
+        }
+        return numMoves;
     }
 }

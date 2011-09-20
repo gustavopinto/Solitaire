@@ -6,6 +6,7 @@ import org.solitaire.board.Board;
 import org.solitaire.board.BoardFactory;
 import org.solitaire.board.BoardHelper;
 import org.solitaire.solver.strategy.BasicStrategy;
+import org.solitaire.solver.strategy.LessThanMovesStrategy;
 import org.solitaire.solver.strategy.Strategy;
 
 import java.util.List;
@@ -37,11 +38,19 @@ public class SolverTest {
     }
 
     @Test
-    public void testSolverStrategy() {
+    public void testBasicStrategy() {
         Solver solver = new Solver(this.board);
         Strategy basicStrategy = new BasicStrategy();
         solver.setStrategy(basicStrategy);
         assertEquals(basicStrategy, solver.getStrategy());
+    }
+
+    @Test
+    public void testMinNumMovesStrategy() {
+        Solver solver = new Solver(this.board);
+        Strategy lessThanMovesStrategy = new LessThanMovesStrategy(28);
+        solver.setStrategy(lessThanMovesStrategy);
+        assertEquals(lessThanMovesStrategy, solver.getStrategy());
     }
 
     @Test
@@ -59,7 +68,7 @@ public class SolverTest {
     }
 
     @Test
-    public void testSolutionIsCorrect() {
+    public void testBasicStrategySolutionIsCorrect() {
         Solver solver = new Solver(this.board);
         solver.setStrategy(new BasicStrategy());
         Long startPosition = this.board.getStartPosition();
@@ -71,5 +80,22 @@ public class SolverTest {
             assertTrue(this.board.getConsecutivePositions(solutionAsList.get(i)).contains(solutionAsList.get(i+1)));
         }
         assertEquals(0b0000000_0000000_0000000_0001000_0000000_0000000_0000000L, solution.getSolution()[0]);
+    }
+
+    @Test
+    public void testLessThanMovesStrategySolutionIsCorrect() {
+        Solver solver = new Solver(this.board);
+        Strategy lessThanMovesStrategy = new LessThanMovesStrategy(25);
+        solver.setStrategy(lessThanMovesStrategy);
+        Long startPosition = this.board.getStartPosition();
+        Solution solution = solver.solve(startPosition);
+        List<Long> solutionAsList = solution.getSolutionAsList();
+        assertEquals(32, solutionAsList.size());
+        assertEquals(startPosition, solutionAsList.get(0));
+        for(int i = 0; i < 31 ; i++) {
+            assertTrue(this.board.getConsecutivePositions(solutionAsList.get(i)).contains(solutionAsList.get(i+1)));
+        }
+        assertEquals(0b0000000_0000000_0000000_0001000_0000000_0000000_0000000L, solution.getSolution()[0]);
+        assertEquals((Integer)25, BoardHelper.countMoves(this.board, solution));
     }
 }

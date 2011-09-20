@@ -1,6 +1,7 @@
 package org.solitaire.board;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * User: Tobias
@@ -18,4 +19,6 @@ public interface Board {
     Long getStartPosition();
 
     ArrayList<Long> getConsecutivePositions(long position);
+
+    Set<Long> getConnectedMoveMasks();
 }

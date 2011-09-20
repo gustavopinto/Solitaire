@@ -1,6 +1,8 @@
 package org.solitaire.board;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * User: Tobias
@@ -8,10 +10,11 @@ import java.util.ArrayList;
  */
 public class EnglishBoard implements Board {
 
-    private ArrayList<Move> moveMasks;
+    private ArrayList<Move> moves;
+    private Set<Long> connectedMoveMasks;
 
     public EnglishBoard() {
-        moveMasks = new ArrayList<>();
+        moves = new ArrayList<>();
 
         createMoves();
     }
@@ -26,16 +29,25 @@ public class EnglishBoard implements Board {
                         && BoardHelper.testBit(layout, getPegID(row,column))
                         && BoardHelper.testBit(layout, getPegID(row + 1,column))
                         && BoardHelper.testBit(layout, getPegID(row + 2,column))) {
-                    moveMasks.add( new Move( getPegID(row, column), getPegID(row + 1, column), getPegID(row + 2, column)));
-                    moveMasks.add( new Move( getPegID(row + 2, column), getPegID(row + 1, column), getPegID(row, column)));
+                    moves.add( new Move( getPegID(row, column), getPegID(row + 1, column), getPegID(row + 2, column)));
+                    moves.add( new Move( getPegID(row + 2, column), getPegID(row + 1, column), getPegID(row, column)));
                 }
                 // detect possible vertical moves
                 if ((column + 2 < getColumns())
                     && BoardHelper.testBit(layout, getPegID(row,column))
                     && BoardHelper.testBit(layout, getPegID(row,column + 1))
                     && BoardHelper.testBit(layout, getPegID(row,column + 2))) {
-                    moveMasks.add( new Move( getPegID(row, column), getPegID(row, column + 1), getPegID(row, column + 2)));
-                    moveMasks.add( new Move( getPegID(row, column + 2), getPegID(row, column + 1), getPegID(row, column)));
+                    moves.add( new Move( getPegID(row, column), getPegID(row, column + 1), getPegID(row, column + 2)));
+                    moves.add( new Move( getPegID(row, column + 2), getPegID(row, column + 1), getPegID(row, column)));
+                }
+            }
+        }
+
+        connectedMoveMasks = new HashSet<>();
+        for(Move firstMove : moves) {
+            for(Move secondMove : moves) {
+                if( firstMove.getEnd() == secondMove.getStart() && ((firstMove.getCheck() & secondMove.getCheck()) == 0L)) {
+                    connectedMoveMasks.add(firstMove.getMask() ^ secondMove.getMask());
                 }
             }
         }
@@ -94,7 +106,7 @@ public class EnglishBoard implements Board {
     @Override
     public ArrayList<Long> getConsecutivePositions(long position) {
         ArrayList<Long> positions = new ArrayList<>();
-        for(Move move : moveMasks) {
+        for(Move move : moves) {
             // apply mask to position
             long masked = position & move.getMask();
 
@@ -105,5 +117,10 @@ public class EnglishBoard implements Board {
             }
         }
         return positions;
+    }
+
+    @Override
+    public Set<Long> getConnectedMoveMasks() {
+        return this.connectedMoveMasks;
     }
 }

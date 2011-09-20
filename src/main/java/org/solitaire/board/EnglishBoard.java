@@ -8,11 +8,15 @@ import java.util.ArrayList;
  */
 public class EnglishBoard implements Board {
 
-    private ArrayList<ArrayList<Long>> moveMasks;
+    private ArrayList<Move> moveMasks;
 
     public EnglishBoard() {
         moveMasks = new ArrayList<>();
 
+        createMoves();
+    }
+
+    private void createMoves() {
         Long layout = this.getLayout();
         // initialize masks
         for (int row = getRows() - 1; row > -1; row--) {
@@ -22,32 +26,19 @@ public class EnglishBoard implements Board {
                         && BoardHelper.testBit(layout, getPegID(row,column))
                         && BoardHelper.testBit(layout, getPegID(row + 1,column))
                         && BoardHelper.testBit(layout, getPegID(row + 2,column))) {
-                    addMove( getPegID(row, column), getPegID(row + 1, column), getPegID(row + 2, column));
+                    moveMasks.add( new Move( getPegID(row, column), getPegID(row + 1, column), getPegID(row + 2, column)));
+                    moveMasks.add( new Move( getPegID(row + 2, column), getPegID(row + 1, column), getPegID(row, column)));
                 }
                 // detect possible vertical moves
                 if ((column + 2 < getColumns())
                     && BoardHelper.testBit(layout, getPegID(row,column))
                     && BoardHelper.testBit(layout, getPegID(row,column + 1))
                     && BoardHelper.testBit(layout, getPegID(row,column + 2))) {
-                    addMove( getPegID(row, column), getPegID(row, column + 1), getPegID(row, column + 2));
+                    moveMasks.add( new Move( getPegID(row, column), getPegID(row, column + 1), getPegID(row, column + 2)));
+                    moveMasks.add( new Move( getPegID(row, column + 2), getPegID(row, column + 1), getPegID(row, column)));
                 }
             }
         }
-    }
-
-    /**
-     * add the move detection mask ( lineup of three pins in a row or column)
-     * and the moving pins (two pins which are adjacent to an empty slot) to the list
-     * @param pin1 index of first pin
-     * @param pin2 index of second pin
-     * @param pin3 index of third pin
-     */
-    private void addMove(int pin1, int pin2, int pin3) {
-        ArrayList<Long> newMoveMask = new ArrayList<>();
-        newMoveMask.add(((1L << pin1) | (1L << pin2) | (1L << pin3)));
-        newMoveMask.add((1L << pin1) | (1L << pin2));
-        newMoveMask.add((1L << pin2) | (1L << pin3));
-        moveMasks.add(newMoveMask);
     }
 
     private int getPegID(int row, int column) {
@@ -103,14 +94,14 @@ public class EnglishBoard implements Board {
     @Override
     public ArrayList<Long> getConsecutivePositions(long position) {
         ArrayList<Long> positions = new ArrayList<>();
-        for(ArrayList<Long> mask : moveMasks) {
+        for(Move move : moveMasks) {
             // apply mask to position
-            long masked = position & mask.get(0);
+            long masked = position & move.getMask();
 
             // detect if move is possible (i.e.  masked equals two pins which are adjacent to an empty slot)
-            if (masked == mask.get(1) || masked == mask.get(2)) {
+            if (masked == move.getCheck()) {
                 // apply move, i.e. the two pins are xor'ed to zero and the empty slot is xor'ed to one
-                positions.add(position ^ mask.get(0));
+                positions.add(position ^ move.getMask());
             }
         }
         return positions;

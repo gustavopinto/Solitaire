@@ -26,13 +26,13 @@ public class BoardHelperTest {
     @Test
     public void testPositionToString() {
         String positionString =
-                "    * * *     \n" +
-                "    * * *     \n" +
-                "* * * * * * * \n" +
-                "* * * o * * * \n" +
-                "* * * * * * * \n" +
-                "    * * *     \n" +
-                "    * * *     \n";
+                "    O O O     \n" +
+                "    O O O     \n" +
+                "O O O O O O O \n" +
+                "O O O * O O O \n" +
+                "O O O O O O O \n" +
+                "    O O O     \n" +
+                "    O O O     \n";
         assertEquals(positionString, BoardHelper.toString(board, board.getStartPosition()));
     }
 

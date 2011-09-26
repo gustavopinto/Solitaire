@@ -5,4 +5,8 @@ This  project serves different purposes:
 
 The first implementation will use Java7 and is developed with the community edition of IntelliJ IDEA version 10.5.2.
 
+For the optimized version you need trove: http://sourceforge.net/projects/trove4j/develop
+It seems to be much faster and much more memory efficient than ArrayList.
+To avoid an out of memory error for the optimized version you should use at least one gig of memory: -Xmx1G
+
 

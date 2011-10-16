@@ -23,6 +23,10 @@ public class TroveStrategy implements Strategy {
         return null;
     }
 
+    /**
+     * Remove positions which have no consecutive positions from reachable positions (dead ends).
+     * @param board Board the board the positions live on
+     */
     private void removeDeadEnds(Board board) {
         for(int pins = 2; pins < reachablePositions.size(); pins++) {
             TLongIterator positionIterator = reachablePositions.get(pins).iterator();
@@ -66,6 +70,12 @@ public class TroveStrategy implements Strategy {
 
     }
 
+    /**
+     * Assemble and store all positions which follow the current positions (modulo symmetry)
+     * @param board the board, the positions live on
+     * @param currentPositions  positions found for a certain number of pins
+     * @param followingPositions  all positions which can follow the current positions (modulo symmetry)
+     */
     private void assembleReachablePositions(Board board, TLongHashSet currentPositions,
                                             TLongHashSet followingPositions) {
         TLongIterator positionIterator = currentPositions.iterator();
@@ -85,9 +95,7 @@ public class TroveStrategy implements Strategy {
                 }
                 //add position if no equivalent position is already in set and the position is no dead end
                 if(!inSet) {
-                    if(!board.getConsecutivePositions(consecutivePosition).isEmpty()) {
-                        followingPositions.add(consecutivePosition);
-                    }
+                    followingPositions.add(consecutivePosition);
                 }
             }
         }

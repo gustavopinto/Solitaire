@@ -3,7 +3,8 @@ package org.solitaire.solver.strategy;
 import org.solitaire.board.Board;
 import org.solitaire.board.BoardHelper;
 import org.solitaire.solver.Solution;
-import org.solitaire.util.HashSet;
+
+import java.util.HashSet;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -16,6 +17,7 @@ import java.util.Set;
  */
 public class AllSolutionsStrategy implements Strategy {
 
+    // HashSet is much faster than ArrayList since we use _contains_ a lot
     private ArrayList<HashSet<Long>> reachablePositions = new ArrayList<>();
 
     @Override
@@ -30,6 +32,7 @@ public class AllSolutionsStrategy implements Strategy {
 
     /**
      * Remove positions which have no consecutive positions from reachable positions (dead ends).
+     *
      * @param board Board the board the positions live on
      */
     private void removeDeadEnds(Board board) {
@@ -82,14 +85,15 @@ public class AllSolutionsStrategy implements Strategy {
 
     /**
      * Assemble and store all positions which follow the current positions (modulo symmetry)
-     * @param board the board, the positions live on
-     * @param currentPositions  positions found for a certain number of pins
-     * @param followingPositions  all positions which can follow the current positions (modulo symmetry)
+     *
+     * @param board              the board, the positions live on
+     * @param currentPositions   positions found for a certain number of pins
+     * @param followingPositions all positions which can follow the current positions (modulo symmetry)
      */
     private void assembleReachablePositions(Board board, HashSet<Long> currentPositions, HashSet<Long> followingPositions) {
         for (Long currentPosition : currentPositions) {
             for (Long consecutivePosition : board.getConsecutivePositions(currentPosition)) {
-                if(followingPositions.contains(consecutivePosition)) {
+                if (followingPositions.contains(consecutivePosition)) {
                     continue;
                 }
                 boolean inSet = false;

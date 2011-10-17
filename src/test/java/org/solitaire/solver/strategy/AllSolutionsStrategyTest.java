@@ -14,8 +14,7 @@ import static org.junit.Assert.fail;
 public class AllSolutionsStrategyTest {
 
     @Test
-    public void testAllSolutionsStrategyRun()
-    {
+    public void testAllSolutionsStrategyRun() {
         Board englishBoard = BoardFactory.createBoard("english");
         Strategy allSolutionsStrategy = new AllSolutionsStrategy();
         Solver solver = new Solver(englishBoard);

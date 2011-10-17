@@ -11,16 +11,16 @@ import static org.junit.Assert.fail;
  * User: Tobias
  * Date: 26.09.2011
  */
-public class AllSolutionsOptimizedStrategyTest {
+public class ParallelHPPCStrategyTest {
 
     @Test
-    public void testAllSolutionsOptimizedStrategyRun()
-    {
+    public void testParallelHPPCStrategy() {
         Board englishBoard = BoardFactory.createBoard("english");
-        Strategy allSolutionsStrategy = new AllSolutionsOptimizedStrategy();
+        Strategy allSolutionsStrategy = new ParallelHPPCStrategy();
         Solver solver = new Solver(englishBoard);
         solver.setStrategy(allSolutionsStrategy);
         solver.solve(englishBoard.getStartPosition());
         fail("not fully implemented yet");
     }
+
 }

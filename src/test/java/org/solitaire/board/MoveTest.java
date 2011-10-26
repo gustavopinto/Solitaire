@@ -18,8 +18,8 @@ public class MoveTest {
         Move move = new Move(start, center, end);
         Long mask = (1L << start) | (1L << center) | (1L << end);
         Long check = (1L << start) | (1L << center);
-        assertEquals(mask, (Long)move.getMask());
-        assertEquals(check, (Long)move.getCheck());
+        assertEquals(mask, (Long) move.getMask());
+        assertEquals(check, (Long) move.getCheck());
         assertEquals(1L << start, move.getStart());
         assertEquals(1L << end, move.getEnd());
         assertEquals(start, move.getStartID());

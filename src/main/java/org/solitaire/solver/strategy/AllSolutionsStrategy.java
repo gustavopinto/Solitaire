@@ -1,12 +1,10 @@
 package org.solitaire.solver.strategy;
 
 import org.solitaire.board.Board;
-import org.solitaire.board.BoardHelper;
 import org.solitaire.solver.Solution;
 
-import java.util.HashSet;
-
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -58,7 +56,7 @@ public class AllSolutionsStrategy implements Strategy {
      * @param startPosition start finding positions with this start position
      */
     private void assembleReachablePositions(Board board, Long startPosition) {
-        int numberOfStartPins = BoardHelper.getNumberOfPins(startPosition);
+        int numberOfStartPins = board.getNumberOfPins(startPosition);
 
         for (int i = 0; i <= numberOfStartPins + 1; i++) {
             reachablePositions.add(new HashSet<Long>());

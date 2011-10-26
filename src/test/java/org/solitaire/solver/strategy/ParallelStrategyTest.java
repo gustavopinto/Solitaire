@@ -14,8 +14,7 @@ import static org.junit.Assert.fail;
 public class ParallelStrategyTest {
 
     @Test
-    public void testParallelStrategy()
-    {
+    public void testParallelStrategy() {
         Board englishBoard = BoardFactory.createBoard("english");
         Strategy parallelStrategy = new ParallelStrategy();
         Solver solver = new Solver(englishBoard);

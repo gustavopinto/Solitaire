@@ -1,7 +1,6 @@
 package org.solitaire.solver.strategy;
 
 import org.solitaire.board.Board;
-import org.solitaire.board.BoardHelper;
 import org.solitaire.solver.Solution;
 import org.solitaire.solver.tasks.ParallelStrategyTask;
 
@@ -39,7 +38,7 @@ public class ParallelStrategy implements Strategy {
      * Due to concurrency there might be symmetric entries in the sets of reachable positions.
      * Remove symmetric entries from reachable positions.
      *
-     * @param board  Board where the positions live
+     * @param board Board where the positions live
      */
     private void check(Board board) {
         for (int pins = 0; pins < reachablePositions.size(); pins++) {
@@ -95,7 +94,7 @@ public class ParallelStrategy implements Strategy {
      * @param startPosition start finding positions with this start position
      */
     private void assembleReachablePositions(Board board, Long startPosition) {
-        int numberOfStartPins = BoardHelper.getNumberOfPins(startPosition);
+        int numberOfStartPins = board.getNumberOfPins(startPosition);
 
         for (int i = 0; i <= numberOfStartPins + 1; i++) {
             reachablePositions.add(new HashSet<Long>());

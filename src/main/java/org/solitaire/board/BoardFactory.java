@@ -7,7 +7,7 @@ package org.solitaire.board;
 
 public class BoardFactory {
     public static Board createBoard(String boardName) {
-        switch(boardName) {
+        switch (boardName) {
             case "english":
                 return new EnglishBoard();
         }

@@ -14,8 +14,7 @@ import static org.junit.Assert.fail;
 public class TroveStrategyTest {
 
     @Test
-    public void testAllSolutionsTroveStrategyRun()
-    {
+    public void testAllSolutionsTroveStrategyRun() {
         Board englishBoard = BoardFactory.createBoard("english");
         Strategy allSolutionsStrategy = new TroveStrategy();
         Solver solver = new Solver(englishBoard);

@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.solitaire.board.Board;
 import org.solitaire.board.BoardFactory;
-import org.solitaire.board.BoardHelper;
 import org.solitaire.solver.strategy.BasicStrategy;
 import org.solitaire.solver.strategy.LessThanMovesStrategy;
 import org.solitaire.solver.strategy.Strategy;
@@ -72,8 +71,8 @@ public class SolverTest {
         List<Long> solutionAsList = solution.getSolutionAsList();
         assertEquals(32, solutionAsList.size());
         assertEquals(startPosition, solutionAsList.get(0));
-        for(int i = 0; i < 31 ; i++) {
-            assertTrue(this.board.getConsecutivePositions(solutionAsList.get(i)).contains(solutionAsList.get(i+1)));
+        for (int i = 0; i < 31; i++) {
+            assertTrue(this.board.getConsecutivePositions(solutionAsList.get(i)).contains(solutionAsList.get(i + 1)));
         }
         assertEquals(0b0000000_0000000_0000000_0001000_0000000_0000000_0000000L, solution.getSolution()[0]);
     }
@@ -88,10 +87,10 @@ public class SolverTest {
         List<Long> solutionAsList = solution.getSolutionAsList();
         assertEquals(32, solutionAsList.size());
         assertEquals(startPosition, solutionAsList.get(0));
-        for(int i = 0; i < 31 ; i++) {
-            assertTrue(this.board.getConsecutivePositions(solutionAsList.get(i)).contains(solutionAsList.get(i+1)));
+        for (int i = 0; i < 31; i++) {
+            assertTrue(this.board.getConsecutivePositions(solutionAsList.get(i)).contains(solutionAsList.get(i + 1)));
         }
         assertEquals(0b0000000_0000000_0000000_0001000_0000000_0000000_0000000L, solution.getSolution()[0]);
-        assertEquals((Integer)25, BoardHelper.countMoves(this.board, solution));
+        assertEquals((Integer) 25, solution.countMoves(this.board));
     }
 }

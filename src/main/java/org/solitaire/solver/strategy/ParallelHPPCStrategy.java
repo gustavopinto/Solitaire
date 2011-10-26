@@ -2,7 +2,6 @@ package org.solitaire.solver.strategy;
 
 import com.carrotsearch.hppc.LongOpenHashSet;
 import org.solitaire.board.Board;
-import org.solitaire.board.BoardHelper;
 import org.solitaire.solver.Solution;
 import org.solitaire.solver.tasks.ParallelHPPCStrategyTask;
 
@@ -27,6 +26,18 @@ public class ParallelHPPCStrategy implements Strategy {
         check(board);
         System.out.println("Time check: " + (System.currentTimeMillis() - start));
         //TODO: calculate all possible solutions
+        ArrayList<ArrayList<Long>> solutions = new ArrayList<>();
+        // start with start-position
+        // for each following (symmetric) position create a new solution
+        for (int pins = 1; pins < reachablePositions.size(); pins++) {
+            LongOpenHashSet positions = reachablePositions.get(pins);
+            for (int i = 0; i < positions.allocated.length; i++) {
+                if (positions.allocated[i]) {
+
+                }
+            }
+        }
+
         return null;
     }
 
@@ -66,7 +77,7 @@ public class ParallelHPPCStrategy implements Strategy {
      * @param startPosition start finding positions with this start position
      */
     private void assembleReachablePositions(Board board, Long startPosition) {
-        int numberOfStartPins = BoardHelper.getNumberOfPins(startPosition);
+        int numberOfStartPins = board.getNumberOfPins(startPosition);
 
         for (int i = 0; i <= numberOfStartPins + 1; i++) {
             reachablePositions.add(new LongOpenHashSet());

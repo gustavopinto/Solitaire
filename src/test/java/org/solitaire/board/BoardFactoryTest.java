@@ -13,10 +13,20 @@ public class BoardFactoryTest {
 
     @Test
     public void testUnknownBoard() {
-        Board unknownBoard = BoardFactory.getInstance().createBoard("unknown");
-        assertNull(unknownBoard);
+        Board board = BoardFactory.getInstance().createBoard("unknown");
+        assertNull(board);
+    }
 
-        Board englishBoard = BoardFactory.getInstance().createBoard("english");
-        assertNotNull(englishBoard);
+    @Test
+    public void testEnglishBoardCreation() {
+        Board board = BoardFactory.getInstance().createBoard("english");
+        assertNotNull(board);
+    }
+
+    @Test
+    public void testQuadraticBoardCreation() {
+        assertNull(BoardFactory.getInstance().createBoard("quadratic", 2));
+        Board board = BoardFactory.getInstance().createBoard("quadratic", 6);
+        assertNotNull(board);
     }
 }

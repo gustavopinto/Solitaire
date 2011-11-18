@@ -41,7 +41,7 @@ public class SolverTest {
     }
 
     @Test
-    public void testMinNumMovesStrategy() {
+    public void testLessThanMovesStrategy() {
         Solver solver = new Solver(this.board);
         Strategy lessThanMovesStrategy = new LessThanMovesStrategy(28);
         solver.setStrategy(lessThanMovesStrategy);
@@ -68,13 +68,13 @@ public class SolverTest {
         solver.setStrategy(new BasicStrategy());
         Long startPosition = this.board.getStartPosition();
         Solution solution = solver.solve(startPosition);
-        List<Long> solutionAsList = solution.getSolutionAsList();
-        assertEquals(32, solutionAsList.size());
-        assertEquals(startPosition, solutionAsList.get(0));
+        List<Long> positions = solution.getPositions();
+        assertEquals(32, positions.size());
+        assertEquals(startPosition, positions.get(0));
         for (int i = 0; i < 31; i++) {
-            assertTrue(this.board.getConsecutivePositions(solutionAsList.get(i)).contains(solutionAsList.get(i + 1)));
+            assertTrue(this.board.getConsecutivePositions(positions.get(i)).contains(positions.get(i + 1)));
         }
-        assertEquals(0b0000000_0000000_0000000_0001000_0000000_0000000_0000000L, solution.getSolution()[0]);
+        assertEquals(new Long(0b0000000_0000000_0000000_0001000_0000000_0000000_0000000L), positions.get(positions.size() - 1));
     }
 
     @Test
@@ -84,13 +84,13 @@ public class SolverTest {
         solver.setStrategy(lessThanMovesStrategy);
         Long startPosition = this.board.getStartPosition();
         Solution solution = solver.solve(startPosition);
-        List<Long> solutionAsList = solution.getSolutionAsList();
-        assertEquals(32, solutionAsList.size());
-        assertEquals(startPosition, solutionAsList.get(0));
+        List<Long> positions = solution.getPositions();
+        assertEquals(32, positions.size());
+        assertEquals(startPosition, positions.get(0));
         for (int i = 0; i < 31; i++) {
-            assertTrue(this.board.getConsecutivePositions(solutionAsList.get(i)).contains(solutionAsList.get(i + 1)));
+            assertTrue(this.board.getConsecutivePositions(positions.get(i)).contains(positions.get(i + 1)));
         }
-        assertEquals(0b0000000_0000000_0000000_0001000_0000000_0000000_0000000L, solution.getSolution()[0]);
+        assertEquals(new Long(0b0000000_0000000_0000000_0001000_0000000_0000000_0000000L), positions.get(positions.size() - 1));
         assertEquals((Integer) 25, solution.countMoves(this.board));
     }
 }

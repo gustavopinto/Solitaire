@@ -1,12 +1,12 @@
 This  project serves different purposes:
 * finding one or all solutions of the (pin or peg) solitaire game in reasonable time
-* practising software development (like a slightly bigger Code Kata)
+* practising software development
 * getting used to some features of Java7
 
 The first implementation will use Java7 and is developed with the community edition of IntelliJ IDEA version 10.5.2.
 
 If you do not have much memory you can use the TroveStrategy trove: http://sourceforge.net/projects/trove4j/develop
-or the ParallelHPPCStrategy http://labs.carrotsearch.com/download/hppc/ or any other primitive collection.
+or the ParallelHPPCStrategy http://labs.carrotsearch.com/download/hppc/ or any other strategy using primitive collections.
 With primitive collections you save memory and the program will run faster than with the java.util collections.
 To avoid an out of memory error for the optimized version you should use at least one gig of memory: -Xmx1000M
 The ParallelStrategy needs more memory to run fast, i.e. -Xmx2000M
@@ -14,5 +14,7 @@ The ParallelStrategy needs more memory to run fast, i.e. -Xmx2000M
 Ideas and information from:
 * http://code.google.com/p/peg-solitaire/source/browse/src/com/googlecode/pegsolitaire
 * http://en.wikipedia.org/wiki/Peg_solitaire#Studies_on_peg_solitaire
+* http://home.comcast.net/~gibell/pegsolitaire/EnglishResults.html
+* http://www.durangobill.com/Peg33.html
 
 

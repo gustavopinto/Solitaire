@@ -47,7 +47,7 @@ public class TroveStrategy implements Strategy {
      * @param startPosition start finding positions with this start position
      */
     private void assembleReachablePositions(Board board, Long startPosition) {
-        int numberOfStartPins = board.getNumberOfPins(startPosition);
+        int numberOfStartPins = board.getNumberOfPegs(startPosition);
 
         for (int i = 0; i <= numberOfStartPins + 1; i++) {
             reachablePositions.add(new TLongHashSet(1));

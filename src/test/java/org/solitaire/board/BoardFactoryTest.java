@@ -13,10 +13,10 @@ public class BoardFactoryTest {
 
     @Test
     public void testUnknownBoard() {
-        Board unknownBoard = BoardFactory.createBoard("unknown");
+        Board unknownBoard = BoardFactory.getInstance().createBoard("unknown");
         assertNull(unknownBoard);
 
-        Board englishBoard = BoardFactory.createBoard("english");
+        Board englishBoard = BoardFactory.getInstance().createBoard("english");
         assertNotNull(englishBoard);
     }
 }

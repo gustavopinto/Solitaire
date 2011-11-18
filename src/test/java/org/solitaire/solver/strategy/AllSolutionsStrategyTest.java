@@ -15,7 +15,7 @@ public class AllSolutionsStrategyTest {
 
     @Test
     public void testAllSolutionsStrategyRun() {
-        Board englishBoard = BoardFactory.createBoard("english");
+        Board englishBoard = BoardFactory.getInstance().createBoard("english");
         Strategy allSolutionsStrategy = new AllSolutionsStrategy();
         Solver solver = new Solver(englishBoard);
         solver.setStrategy(allSolutionsStrategy);

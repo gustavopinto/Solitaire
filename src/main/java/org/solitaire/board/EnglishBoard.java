@@ -1,45 +1,29 @@
 package org.solitaire.board;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
+ * An english board implementation of the class Board, which is the most popular layout for the peg solitaire game.
+ * The english board has a "cross"-like layout on a 7x7 grid.
+ * The start position is the layout except the center peg is removed.
+ * The end position is the inverse of the start position.
  * User: Tobias
  * Date: 17.09.2011
  */
-public class EnglishBoard implements Board {
+public class EnglishBoard extends Board {
 
-    // list of possible moves on this board
-    private ArrayList<Move> moves;
-    // masks to identify connected moves
-    private Set<Long> connectedMoveMasks;
-
+    /**
+     * default constructor: assemble possible moves
+     */
     public EnglishBoard() {
         moves = new ArrayList<>();
         assembleMoves();
     }
 
-    /**
-     * test bit at index in number
-     *
-     * @param number long
-     * @param index  position of bit
-     * @return true if bit at index is set
-     */
-    public static boolean testBit(long number, int index) {
-        return (number & 1L << index) != 0L;
-    }
-
-    @Override
-    public int getNumberOfPins(long position) {
-        return Long.bitCount(position);
-    }
-
     @Override
     public String toString(Long position) {
         StringBuilder positionString = new StringBuilder();
-        for (int i = 0; i < this.getNumberOfFields(); i++) {
+        for (int i = 0; i < this.getNumberOfHoles(); i++) {
             if (!testBit(this.getLayout(), i)) {
                 positionString.append("  ");
             } else if (testBit(position, i)) {
@@ -55,57 +39,19 @@ public class EnglishBoard implements Board {
     }
 
     /**
-     * Assemble all possible moves on this board.
-     * inspect the board from top left to right bottom for three consecutive holes.
-     * Assemble masks for connected moves.
-     */
-    private void assembleMoves() {
-        Long layout = this.getLayout();
-        // initialize masks
-        for (int row = getRows() - 1; row > -1; row--) {
-            for (int column = getColumns() - 1; column > -1; column--) {
-                // detect possible horizontal moves
-                if ((row + 2 < getRows())
-                        && testBit(layout, getPinID(row, column))
-                        && testBit(layout, getPinID(row + 1, column))
-                        && testBit(layout, getPinID(row + 2, column))) {
-                    moves.add(new Move(getPinID(row, column), getPinID(row + 1, column), getPinID(row + 2, column)));
-                    moves.add(new Move(getPinID(row + 2, column), getPinID(row + 1, column), getPinID(row, column)));
-                }
-                // detect possible vertical moves
-                if ((column + 2 < getColumns())
-                        && testBit(layout, getPinID(row, column))
-                        && testBit(layout, getPinID(row, column + 1))
-                        && testBit(layout, getPinID(row, column + 2))) {
-                    moves.add(new Move(getPinID(row, column), getPinID(row, column + 1), getPinID(row, column + 2)));
-                    moves.add(new Move(getPinID(row, column + 2), getPinID(row, column + 1), getPinID(row, column)));
-                }
-            }
-        }
-
-        connectedMoveMasks = new HashSet<>();
-        for (Move firstMove : moves) {
-            for (Move secondMove : moves) {
-                if (firstMove.getEnd() == secondMove.getStart() && ((firstMove.getCheck() & secondMove.getCheck()) == 0L)) {
-                    connectedMoveMasks.add(firstMove.getMask() ^ secondMove.getMask());
-                }
-            }
-        }
-    }
-
-    /**
-     * mapping of pins to id's
+     * mapping of pegs to id's : linear
      *
-     * @param row    the pin's row
-     * @param column the pin's column
-     * @return int the id of the pin
+     * @param row    the peg's row
+     * @param column the peg's column
+     * @return int the id of the peg
      */
-    private int getPinID(int row, int column) {
+    @Override
+    int getPegID(int row, int column) {
         return (row * getColumns() + column);
     }
 
     @Override
-    public Integer getNumberOfFields() {
+    public Integer getNumberOfHoles() {
         // 7*7
         return 49;
     }
@@ -131,24 +77,9 @@ public class EnglishBoard implements Board {
     }
 
     @Override
-    public ArrayList<Long> getConsecutivePositions(long position) {
-        ArrayList<Long> positions = new ArrayList<>();
-        for (Move move : moves) {
-            // apply mask to position
-            long masked = position & move.getMask();
-
-            // detect if move is possible (i.e.  masked equals two pins which are adjacent to an empty slot)
-            if (masked == move.getCheck()) {
-                // apply move, i.e. the two pins are xor'ed to zero and the empty slot is xor'ed to one
-                positions.add(position ^ move.getMask());
-            }
-        }
-        return positions;
-    }
-
-    @Override
-    public Set<Long> getConnectedMoveMasks() {
-        return this.connectedMoveMasks;
+    public Long getEndPosition() {
+        //for the english board the end position is the inverse of the start position.
+        return 0B0001000_0000000_0000000_0000000L;
     }
 
     /**
@@ -191,7 +122,7 @@ public class EnglishBoard implements Board {
     }
 
     /**
-     * shift each pin to the rotated position
+     * shift each peg to the rotated position
      *
      * @param position as long
      * @return position rotated by 90 degree

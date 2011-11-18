@@ -15,7 +15,7 @@ public class ParallelHPPCStrategyTest {
 
     @Test
     public void testParallelHPPCStrategy() {
-        Board englishBoard = BoardFactory.createBoard("english");
+        Board englishBoard = BoardFactory.getInstance().createBoard("english");
         Strategy allSolutionsStrategy = new ParallelHPPCStrategy();
         Solver solver = new Solver(englishBoard);
         solver.setStrategy(allSolutionsStrategy);

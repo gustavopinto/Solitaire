@@ -17,16 +17,16 @@ public class EnglishBoardTest {
 
     @Before
     public void createBoard() {
-        this.board = BoardFactory.createBoard("english");
+        this.board = BoardFactory.getInstance().createBoard("english");
     }
 
     @Test
     public void testEnglishBoardAttributes() {
-        Board englishBoard = BoardFactory.createBoard("english");
+        Board englishBoard = BoardFactory.getInstance().createBoard("english");
         assertNotNull(englishBoard);
         assertEquals((Integer) 7, englishBoard.getColumns());
         assertEquals((Integer) 7, englishBoard.getRows());
-        assertEquals((Integer) 49, englishBoard.getNumberOfFields());
+        assertEquals((Integer) 49, englishBoard.getNumberOfHoles());
 
         //  check layout and startPosition
         Long layout = 0B0011100_0011100_1111111_1111111_1111111_0011100_0011100L;
@@ -72,7 +72,7 @@ public class EnglishBoardTest {
         solution[28] = 0B0011100_0011100_0111110_1001111_1111111_0011100_0011100L;
         solution[29] = 0B0011100_0011100_0111110_1110111_1111111_0011100_0011100L;
         solutionObject.setSolution(solution);
-        Board englishBoard = BoardFactory.createBoard("english");
+        Board englishBoard = BoardFactory.getInstance().createBoard("english");
         Integer numMoves = solutionObject.countMoves(englishBoard);
         assertEquals((Integer) 15, numMoves);
     }
@@ -92,8 +92,8 @@ public class EnglishBoardTest {
 
     @Test
     public void testNumberOfPins() {
-        assertEquals(32, this.board.getNumberOfPins(this.board.getStartPosition()));
-        assertEquals(0, this.board.getNumberOfPins(0L));
+        assertEquals(32, this.board.getNumberOfPegs(this.board.getStartPosition()));
+        assertEquals(0, this.board.getNumberOfPegs(0L));
     }
 
 }

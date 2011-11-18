@@ -18,17 +18,17 @@ public class BasicStrategy implements Strategy {
         this.solved = false;
         this.board = board;
         //center piece for uneven layout only
-        if (board.getNumberOfFields() % 2 == 1) {
-            this.endPosition = (1L << (board.getNumberOfFields() / 2));
+        if (board.getNumberOfHoles() % 2 == 1) {
+            this.endPosition = (1L << (board.getNumberOfHoles() / 2));
         }
 
-        this.solution = new Solution(board.getNumberOfPins(startPosition));
+        this.solution = new Solution(board.getNumberOfPegs(startPosition));
         this.solveRecursive(startPosition);
         return solution;
     }
 
     private void solveRecursive(long startPosition) {
-        int numPieces = board.getNumberOfPins(startPosition);
+        int numPieces = board.getNumberOfPegs(startPosition);
         if (numPieces <= 1) {
             return;
         }

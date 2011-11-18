@@ -15,7 +15,7 @@ public class ParallelStrategyTest {
 
     @Test
     public void testParallelStrategy() {
-        Board englishBoard = BoardFactory.createBoard("english");
+        Board englishBoard = BoardFactory.getInstance().createBoard("english");
         Strategy parallelStrategy = new ParallelStrategy();
         Solver solver = new Solver(englishBoard);
         solver.setStrategy(parallelStrategy);

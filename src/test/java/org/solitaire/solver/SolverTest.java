@@ -22,7 +22,7 @@ public class SolverTest {
 
     @Before
     public void createBoard() {
-        this.board = BoardFactory.createBoard("english");
+        this.board = BoardFactory.getInstance().createBoard("english");
     }
 
     @Test

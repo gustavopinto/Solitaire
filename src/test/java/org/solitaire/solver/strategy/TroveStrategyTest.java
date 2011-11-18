@@ -15,7 +15,7 @@ public class TroveStrategyTest {
 
     @Test
     public void testAllSolutionsTroveStrategyRun() {
-        Board englishBoard = BoardFactory.createBoard("english");
+        Board englishBoard = BoardFactory.getInstance().createBoard("english");
         Strategy allSolutionsStrategy = new TroveStrategy();
         Solver solver = new Solver(englishBoard);
         solver.setStrategy(allSolutionsStrategy);

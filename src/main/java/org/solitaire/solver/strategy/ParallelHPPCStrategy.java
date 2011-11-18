@@ -41,7 +41,6 @@ public class ParallelHPPCStrategy implements Strategy {
         return null;
     }
 
-
     private void check(Board board) {
         for (int pins = 0; pins < reachablePositions.size(); pins++) {
             long start = System.currentTimeMillis();

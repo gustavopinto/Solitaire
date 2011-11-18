@@ -25,11 +25,11 @@ public class ParallelStrategy implements Strategy {
     public Solution solve(Board board, Long startPosition) {
         assembleReachablePositions(board, startPosition);
         Long start = System.currentTimeMillis();
-        removeDeadEnds(board);
-        System.out.println("Time dead ends: " + (System.currentTimeMillis() - start));
-        start = System.currentTimeMillis();
         check(board);
         System.out.println("Time check: " + (System.currentTimeMillis() - start));
+        start = System.currentTimeMillis();
+        removeNonWinningPositions(board);
+        System.out.println("Time non winning positions: " + (System.currentTimeMillis() - start) + "\n");
         //TODO: calculate all possible solutions
         return null;
     }
@@ -66,23 +66,33 @@ public class ParallelStrategy implements Strategy {
     }
 
     /**
-     * Remove positions which have no consecutive positions from reachable positions (dead ends).
+     * remove all positions which are not part of a solution.
      *
-     * @param board Board the board the positions live on
+     * @param board the board, the positions live on
      */
-    private void removeDeadEnds(Board board) {
+    private void removeNonWinningPositions(Board board) {
         for (int pins = 2; pins < reachablePositions.size(); pins++) {
             Set<Long> positions = reachablePositions.get(pins);
+            Set<Long> followingPositions = reachablePositions.get(pins - 1);
             ArrayList<Long> deadEnds = new ArrayList<>();
             for (Long position : positions) {
-                if (board.getConsecutivePositions(position).isEmpty()) {
+                boolean isWinningPosition = false;
+                for (Long consecutivePosition : board.getConsecutivePositions(position)) {
+                    for (Long symmetricPosition : board.getSymmetricPositions(consecutivePosition)) {
+                        if (followingPositions.contains(symmetricPosition)) {
+                            isWinningPosition = true;
+                            break;
+                        }
+                    }
+                }
+                if (!isWinningPosition) {
                     deadEnds.add(position);
                 }
             }
             for (long deadEnd : deadEnds) {
                 positions.remove(deadEnd);
             }
-            System.out.println(pins + " pins: " + deadEnds.size() + " positions without followers.");
+            System.out.println("Found " + deadEnds.size() + " non winning positions with " + pins + " pieces. Remaining " + positions.size());
         }
     }
 

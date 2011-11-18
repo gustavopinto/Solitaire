@@ -7,7 +7,6 @@ import org.solitaire.solver.Solution;
 import org.solitaire.solver.Solver;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 /**
  * User: Tobias
